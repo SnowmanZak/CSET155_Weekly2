@@ -40,14 +40,28 @@ def getBoat():
 def createBoat():
     try:
         conn.execute(text("insert into boats values (:id, :name, :type, :owner_id, :rental_price)"), request.form)
+        conn.commit()
         return render_template('boat_create.html', error = None, success = "Successful")
     except:
         return render_template('boat_create.html', error = "Failed", success = None)
 
-@app.route('/boatSearch')
+@app.route('/boatSearch', methods = ['GET'])
 def searchBoat():
     return render_template('search.html')
 
+@app.route('/boatSearch', methods = ['POST'])
+def returnBoat():
+    try:
+        search_id = request.form['search_id']
+        result = conn.execute(text("select * from boats where id = :search_id"), {'search_id': search_id})
+        boats = result.fetchall()  
+        if boats:
+            boat_data = boats[0]  
+            return render_template('search.html', boat_data=boat_data, error=None, success="Found boat")
+        else:
+            return render_template('search.html', error="No boat found with that ID", success=None)
+    except:
+        return render_template('search.html', error="Failed", success=None)
 
 @app.route('/boatDelete')
 def deleteBoat():
