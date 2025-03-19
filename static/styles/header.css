@@ -3,7 +3,8 @@
   }
   
   .logo {
-    width: 45px;
+    width: 60px;
+    border-radius: 50px;
   }
   
   header li {
