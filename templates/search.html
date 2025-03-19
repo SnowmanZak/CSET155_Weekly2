@@ -14,7 +14,7 @@
 
     .input_submit {
       width: 100%;
-      background-color: #4CAF50;
+      background-color: navy;
       color: white;
       padding: 14px 20px;
       margin: 8px 0;
@@ -24,7 +24,7 @@
     }
 
     .input_submit:hover {
-      background-color: #45a049;
+      background-color: rgb(12, 12, 177);
     }
 
 </style>
@@ -40,6 +40,7 @@
             <h2>{{ success }}</h2>
         {% endif %}
 
+        <h2>Search by Boat ID</h2>
         <form action="/boatSearch" method="POST">
             <input type="number" name="search_id" placeholder="ID" class="input_field"> <br>
             <input type="submit" value="Submit" class="input_submit">

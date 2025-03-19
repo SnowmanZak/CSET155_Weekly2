@@ -63,9 +63,27 @@ def returnBoat():
     except:
         return render_template('search.html', error="Failed", success=None)
 
-@app.route('/boatDelete')
-def deleteBoat():
+
+@app.route('/boatDelete', methods = ['GET'])
+def findBoat():
     return render_template('delete.html')
+
+
+
+@app.route('/boatDelete', methods = ['POST'])
+def deleteBoat():
+    try:
+        delete_id = request.form['delete_id']
+        result = conn.execute(text("delete from boats where id = :delete_id"), {'delete_id': delete_id})
+        conn.commit()
+
+        if result.rowcount > 0:
+            return render_template('delete.html', success="Boat deleted successfully", error=None)
+        else:
+            return render_template('delete.html', success=None, error="No boat found with that ID")
+    except:
+        return render_template('delete.html', success=None, error="Failed to delete boat")
+
 
 
 @app.route('/boatUpdate')
