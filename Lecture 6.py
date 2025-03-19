@@ -28,7 +28,7 @@ def greeting():
 @app.route('/Boats')
 def boats():
     boats = conn.execute(text("select * from boats")).all()
-    return render_template('boats.html', boats = boats[:10])
+    return render_template('boats.html', boats = boats)
 
 
 @app.route('/boatCreate', methods = ['GET'])

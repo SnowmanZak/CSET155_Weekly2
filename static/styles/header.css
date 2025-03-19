@@ -26,13 +26,15 @@
     right: 0;
   }
   
-  .input, .barItem input{
-    height: 35px;
-    border: none;
-    border-radius: 5px;
-    margin-left: 10px;
-  }
-  
+.barItem li a {
+    text-decoration: none;
+    color: black;
+}
+
+.barItem li:hover a {
+    color: rgb(12, 12, 177);
+    background-color: rgb(223, 218, 218);
+}
   .mainDiv {
     margin: auto;
     width: 30%;
@@ -195,5 +197,4 @@
       flex: 2 0px;
     }
   }
-  
   

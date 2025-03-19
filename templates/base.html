@@ -12,10 +12,12 @@
           <img src="../static/images/logo.jpg" alt="Logo" class="logo">
           <ul class="barItem">
 
-            <li><a>HOME</a></li>
-            <li>SERVICES</li>
-            <li>ABOUT</li>
-            <li>CONTACT</li>
+            <li><a href="{{ url_for('greeting') }}">HOME</a></li>
+            <li><a href="{{ url_for('boats') }}">BOATS</a></li>
+            <li><a href="{{ url_for('getBoat') }}">CREATE BOAT</a></li>
+            <li><a href="">SEARCH BOAT</a></li>
+            <li><a href="">DELETE BOAT</a></li>
+            <li><a href="">UPDATE BOAT</a></li>
           </ul>
         </div>
 
