@@ -44,7 +44,19 @@ def createBoat():
     except:
         return render_template('boat_create.html', error = "Failed", success = None)
 
+@app.route('/boatSearch')
+def searchBoat():
+    return render_template('search.html')
 
+
+@app.route('/boatDelete')
+def deleteBoat():
+    return render_template('delete.html')
+
+
+@app.route('/boatUpdate')
+def updateBoat():
+    return render_template('update.html')
 
 
 
