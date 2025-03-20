@@ -1,9 +1,70 @@
+<style>
+    .body{
+        margin: auto;
+    }
+    .input_field {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .input_submit {
+      width: 100%;
+      background-color: navy;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .input_submit:hover {
+      background-color: rgb(12, 12, 177);
+    }
+</style>
+
 {%extends 'base.html'%}
 
 {% block body %}
-<h1>update</h1>
+<div class="body">
+    <form action="/boatUpdate" method="POST">
+        <label for="update_id">Enter Boat ID to Update:</label>
+        <input type="number" name="update_id" id="update_id" placeholder="Boat ID" class="input_field" required>
+        <input type="submit" value="Search Boat" class="input_submit">
+    </form>
 
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
 
+    {% if boat_data %}
+        <h3>Boat Found:</h3>
+        <form action="/boatUpdateConfirm" method="POST">
+            <input type="hidden" name="boat_id" value="{{ boat_data.id }}">
 
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="{{ boat_data.name }}" class="input_field" required>
 
+            <label for="type">Type:</label>
+            <input type="text" name="type" id="type" value="{{ boat_data.type }}" class="input_field" required>
+
+            <label for="owner_id">Owner ID:</label>
+            <input type="number" name="owner_id" id="owner_id" value="{{ boat_data.owner_id }}" class="input_field" required>
+
+            <label for="rental_price">Rental Price:</label>
+            <input type="number" step="0.01" name="rental_price" id="rental_price" value="{{ boat_data.rental_price }}" class="input_field" required>
+
+            <input type="submit" value="Update Boat" class="input_submit">
+        </form>
+    {% endif %}
+
+    {% if success %}
+        <p class="success-message">{{ success }}</p>
+    {% endif %}
+</div>
 {% endblock %}

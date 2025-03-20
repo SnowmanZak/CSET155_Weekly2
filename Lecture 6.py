@@ -86,9 +86,56 @@ def deleteBoat():
 
 
 
-@app.route('/boatUpdate')
-def updateBoat():
+@app.route('/boatUpdate', methods = ['GET'])
+def locateBoat():
     return render_template('update.html')
+
+
+@app.route('/boatUpdate', methods = ['POST'])
+def updateBoat():
+    try:
+        update_id = request.form.get('update_id')
+
+        if not update_id:
+            return render_template('update.html', error="Please enter a boat ID", boat_data=None)
+
+        result = conn.execute(text("SELECT * FROM boats WHERE id = :update_id"), {'update_id': update_id})
+        boat = result.fetchone()
+
+        if boat:
+            return render_template('update.html', boat_data=boat, error=None)
+        else:
+            return render_template('update.html', error="No boat found with that ID", boat_data=None)
+    
+    except:
+        return render_template('update.html', error="Failed to search for boat", boat_data=None)
+
+@app.route('/boatUpdateConfirm', methods=['POST'])
+def updateBoatConfirm():
+    try:
+        boat_id = request.form.get('boat_id')
+        name = request.form.get('name')
+        type = request.form.get('type')
+        owner_id = request.form.get('owner_id')
+        rental_price = request.form.get('rental_price')
+
+        result = conn.execute(
+            text("""
+                UPDATE boats
+                SET name = :name, type = :type, owner_id = :owner_id, rental_price = :rental_price
+                WHERE id = :boat_id
+            """),
+            {'name': name, 'type': type, 'owner_id': owner_id, 'rental_price': rental_price, 'boat_id': boat_id}
+        )
+        conn.commit()
+
+        if result.rowcount > 0:
+            return render_template('update.html', success="Boat updated successfully", error=None)
+        else:
+            return render_template('update.html', error="Failed to update boat", success=None)
+    
+    except:
+        return render_template('update.html', error="Failed to update boat", success=None)
 
 
 
